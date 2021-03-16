@@ -16,7 +16,7 @@ const Todo = () => {
   const initTasks = [
     {
       id: "1",
-      taskTitle: "Start a new pen",
+      taskTitle: "Start a new task",
       active: true
     },
     {
@@ -28,24 +28,47 @@ const Todo = () => {
       taskTitle: "Meeting with team"
     }
   ];
-  const [tasks, setTasks] = useState(initTasks);
+  const [idList, setIdList] = useState(initTasks.map(task => task.id));
+  const [tasks, setTasks] = useState(
+    initTasks.reduce((acc, task) => {
+      acc[task.id] = task;
+      return acc;
+    }, {})
+  );
   const [title, setTitle] = useState("");
   const changeTitle = e => setTitle(e.target.value);
 
+  const checkBox = id => {
+    const newTasks = {
+      ...tasks,
+      [id]: {
+        ...tasks[id],
+        active: !tasks[id].active
+      }
+    };
+    setTasks(newTasks);
+  };
+
   const addTask = () => {
     if (title === "") return;
+    const id = new Date().getTime();
     const newTask = {
-      id: new Date().getTime(),
+      id,
       taskTitle: title
     };
-    const newList = [...tasks, newTask];
-    setTasks(newList);
+    const newList = [...idList, id];
+    const newTasks = {
+      ...tasks,
+      [id]: newTask
+    };
+    setIdList(newList);
+    setTasks(newTasks);
     setTitle("");
   };
 
-  const removeTask = id => {
-    const newList = tasks.filter(tasks => tasks.id !== id);
-    setTasks(newList);
+  const removeTask = taskId => {
+    const newList = idList.filter(id => taskId !== id);
+    setIdList(newList);
   };
 
   return (
@@ -63,9 +86,15 @@ const Todo = () => {
         </AddBox>
       </InputContainer>
       <TasksList>
-        {tasks.map(tasksBox => {
+        {idList.map(id => {
+          const task = tasks[id];
           return (
-            <TasksBox remove={removeTask} {...tasksBox} key={tasksBox.id} />
+            <TasksBox
+              remove={removeTask}
+              {...task}
+              key={id}
+              checkBox={checkBox}
+            />
           );
         })}
       </TasksList>
@@ -74,12 +103,12 @@ const Todo = () => {
 };
 
 const TasksBox = React.memo(props => {
-  const { taskTitle, active, remove, id } = props;
+  const { taskTitle, remove, id, active = false, checkBox } = props;
   return (
-    <Tasks>
+    <Tasks onClick={() => checkBox(id)}>
       <TitleTask>
-        <input type="checkbox" checked={active} readOnly />
-        <TaskTitle>{taskTitle}</TaskTitle>
+        <input type="checkbox" checked={active} onChange={() => checkBox(id)} />
+        <TaskTitle active={active}>{taskTitle}</TaskTitle>
         <span>
           <BsTrash onClick={() => remove(id)} />
         </span>
