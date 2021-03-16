@@ -61,8 +61,7 @@ export const TasksList = styled.div`
 export const Tasks = styled.div`
   display: flex;
   width: 100%;
-  @media screen and (max-width: 768px) {
-  }
+  cursor: pointer;
 `;
 export const TitleTask = styled.div`
   display: flex;
@@ -78,6 +77,7 @@ export const TitleTask = styled.div`
   line-height: 18px;
   word-break: break-all;
   text-align: left;
+  cursor: pointer;
   input {
     position: absolute;
     width: 16px;
