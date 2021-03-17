@@ -54,8 +54,9 @@ export const AddBox = styled.div`
 export const TasksList = styled.div`
   display: flex;
   width: 100%;
-  //max-height: inherit;
+  max-height: 600px;
   flex-direction: column;
+	margin-bottom: 10px;
   overflow-y: auto;
 `;
 export const Tasks = styled.div`
@@ -103,7 +104,7 @@ export const TaskTitle = styled.div`
   text-decoration: ${({ active }) => (active ? "line-through" : "none")};
 `;
 export const DeleteAll = styled.div`
-	display: flex;
+  display: flex;
   margin-left: auto;
   color: #9394a5;
   font-size: 12px;
