@@ -75,6 +75,14 @@ const Todo = () => {
   const removeAll = () => {
     setIdList([]);
     setTasks({});
+    setTitle("");
+  };
+
+  const handleKeyPress = e => {
+    if (e.key === "Enter") {
+      //console.log("press enter");
+      addTask();
+    }
   };
 
   return (
@@ -86,6 +94,7 @@ const Todo = () => {
           placeholder="Add New Task"
           value={title}
           onChange={changeTitle}
+          onKeyPress={handleKeyPress}
         />
         <AddBox>
           <FcPlus onClick={addTask} />
