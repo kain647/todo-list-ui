@@ -102,3 +102,16 @@ export const TaskTitle = styled.div`
   padding-left: 30px;
   text-decoration: ${({ active }) => (active ? "line-through" : "none")};
 `;
+export const DeleteAll = styled.div`
+	display: flex;
+  margin-left: auto;
+  color: #9394a5;
+  font-size: 12px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  :hover {
+    color: #3a7bfd;
+  }
+`;
