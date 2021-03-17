@@ -9,7 +9,8 @@ import {
   Tasks,
   TitleTask,
   AddBox,
-  TaskTitle
+  TaskTitle,
+  DeleteAll
 } from "./styles";
 
 const Todo = () => {
@@ -71,6 +72,11 @@ const Todo = () => {
     setIdList(newList);
   };
 
+  const removeAll = () => {
+    setIdList([]);
+    setTasks({});
+  };
+
   return (
     <Container>
       <Title>TO DO LIST</Title>
@@ -98,6 +104,7 @@ const Todo = () => {
           );
         })}
       </TasksList>
+      <DeleteAll onClick={removeAll}>Delete all tasks</DeleteAll>
     </Container>
   );
 };
